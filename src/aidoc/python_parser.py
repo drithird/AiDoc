@@ -10,37 +10,43 @@ class NodeType(Enum):
 
 
 class ProgramNode:
-    def __init__(self, node_type, name, size):
-        self.node_type = node_type
-        self.node_name = name
-        self.node_size = size
-        self.modules = []
-        self.functions = []
-        self.variables = []
+    def __init__(self, type, name, size):
+        self.type = type
+        self.name = name
+        self.size = size
+        self.nodes = []
 
 
 class Application(ProgramNode):
     def __init__(self, name, absolute_location, relative_location, size):
-        self.super(NodeType.APPLICATION, name, size),
+        super().__init__(NodeType.APPLICATION, name, size),
         self.absolute_location = (absolute_location,)
         self.relative_location = (relative_location,)
         self.files = []
 
+    def __repr__(self):
+        return f"Application(name={self.name},\
+                absolute_location={self.absolute_location},\
+                relative_location={self.relative_location},\
+                size={self.size},\
+                )"
+
+    def __str__(self):
+        return f"Application: {self.name}"
+
 
 class Module(ProgramNode):
     def __init__(self, name, absolute_location, relative_location, size):
-        self.super(NodeType.MODULE, name, size)
+        super().__init__(NodeType.MODULE, name, size)
         self.absolute_location = absolute_location
         self.relative_location = relative_location
 
 
 class Class(ProgramNode):
     def __init__(self, name, size):
-        self.super(NodeType.CLASS, name, size)
-        self.methods = []
-        self.instance_variables = []
+        super().__init__(NodeType.CLASS, name, size)
 
 
 class Method(ProgramNode):
     def __init__(self, name, size):
-        self.super(NodeType.METHOD, name, size)
+        super().__init__(NodeType.METHOD, name, size)

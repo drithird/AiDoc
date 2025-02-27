@@ -1,0 +1,256 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        ImportFrom(
+            module='datetime',
+            names=[
+                alias(name='datetime')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='VERSION', ctx=Store())],
+            value=Constant(value='1.0.0')),
+        Assign(
+            targets=[
+                Name(id='AUTHOR', ctx=Store())],
+            value=Constant(value='Test User')),
+        FunctionDef(
+            name='greet',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='name',
+                        annotation=Name(id='str', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Return a greeting message.')),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Hello, '),
+                            FormattedValue(
+                                value=Name(id='name', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='!')]))],
+            decorator_list=[],
+            returns=Name(id='str', ctx=Load()),
+            type_params=[]),
+        ClassDef(
+            name='Rectangle',
+            bases=[],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='A class representing a rectangle.')),
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='length',
+                                annotation=Name(id='float', ctx=Load())),
+                            arg(
+                                arg='width',
+                                annotation=Name(id='float', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='Initialize the rectangle with length and width.')),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='length',
+                                    ctx=Store())],
+                            value=Name(id='length', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='width',
+                                    ctx=Store())],
+                            value=Name(id='width', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='created_at',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='datetime', ctx=Load()),
+                                    attr='now',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[],
+                    type_params=[]),
+                FunctionDef(
+                    name='area',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='Calculate the area of the rectangle.')),
+                        Return(
+                            value=BinOp(
+                                left=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='length',
+                                    ctx=Load()),
+                                op=Mult(),
+                                right=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='width',
+                                    ctx=Load())))],
+                    decorator_list=[],
+                    returns=Name(id='float', ctx=Load()),
+                    type_params=[]),
+                FunctionDef(
+                    name='perimeter',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='Calculate the perimeter of the rectangle.')),
+                        Return(
+                            value=BinOp(
+                                left=Constant(value=2),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='length',
+                                        ctx=Load()),
+                                    op=Add(),
+                                    right=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='width',
+                                        ctx=Load()))))],
+                    decorator_list=[],
+                    returns=Name(id='float', ctx=Load()),
+                    type_params=[])],
+            decorator_list=[],
+            type_params=[]),
+        FunctionDef(
+            name='current_time',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Return the current timestamp as a string.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='datetime', ctx=Load()),
+                                    attr='now',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='strftime',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='%Y-%m-%d %H:%M:%S')],
+                        keywords=[]))],
+            decorator_list=[],
+            returns=Name(id='str', ctx=Load()),
+            type_params=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='rect', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Rectangle', ctx=Load()),
+                        args=[
+                            Constant(value=10),
+                            Constant(value=5)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Area: '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='rect', ctx=Load()),
+                                                attr='area',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        conversion=-1),
+                                    Constant(value=', Perimeter: '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='rect', ctx=Load()),
+                                                attr='perimeter',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='greet', ctx=Load()),
+                                args=[
+                                    Name(id='AUTHOR', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Script executed at: '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Name(id='current_time', ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])
