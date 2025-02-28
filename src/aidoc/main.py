@@ -9,22 +9,27 @@ def main(file_path) -> None:
     with open(file_path, "r") as file:
         for _ in file:
             line += 1
+    app = pp.Application("Test_Parsing", __file__, os.path.relpath(__file__), line)
+    print(app)
     source = ""
     with open(file_path, "r") as file:
         source = file.read()
-    app = pp.Application("Python Parser", os.path.abspath(__file__), __file__, line)
     tree = ast.parse(source)
-    with open(file_path, "r") as file:
-        parsed_ast = ast.parse(file.read())
-        with open("dump.json", "w") as json_file:
-            json_file.write(ast.dump(parsed_ast, indent=4))
+    for node in ast.walk(tree):
+        match (type(node)):
+            case ast.Module:
+                module = pp.Module(
+                    os.path.basename(__file__),
+                    __file__,
+                    os.path.relpath(__file__),
+                    line,
+                )
+                print(repr(module))
+            case ast.Import:
 
-
-#    for node in ast.walk(tree):
-#        match (type(node)):
-#            case ast.Module:
-#                node: ast.Module = node
-#                print()
+                break
+            case _:
+                print(node)
 
 
 if __name__ == "__main__":
