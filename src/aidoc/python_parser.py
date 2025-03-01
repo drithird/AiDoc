@@ -26,9 +26,18 @@ class ProgramNode:
 
     def add_child(self, node):
         self.children.append(node)
+        
+    def __str__(self):
+        tabs = " " * (self.level - 1) * 3
+        string = tabs + f"{self.type}: {self.name} {{\n"
+        for child in self.children:
+            string += str(child) + "\n"
+        string += tabs + " " * 3 + "}"
+        return string 
 
     def __repr__(self):
         return f"{self.type.value}({self.name}, children={len(self.children)})"
+    
 
 
 class Application(ProgramNode):
@@ -45,21 +54,12 @@ class Application(ProgramNode):
                 size={self.size},\
                 )"
 
-    def __str__(self):
-        tabs = "\t" * (self.level - 1)
-        string = tabs + f"Application: {self.name} {{\n"
-        for module in self.children:
-            string += str(module) + "\n"
-        string += tabs + "\t}"
-        return string
-
-
 class Module(ProgramNode):
-    def __init__(self, name, absolute_location, relative_location, size):
-        super().__init__(NodeType.MODULE, name, size)
+    def __init__(self, name, absolute_location, relative_location, size, parent):
+        super().__init__(NodeType.MODULE, name, size, parent)
         self.absolute_location = absolute_location
         self.relative_location = relative_location
-
+        
 
 class Import(ProgramNode):
     def __init__(self, name, size, parent):

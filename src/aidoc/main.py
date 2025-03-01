@@ -10,7 +10,6 @@ def main(file_path) -> None:
         for _ in file:
             line += 1
     app = pp.Application("Test_Parsing", __file__, os.path.relpath(__file__), line)
-    print(app)
     source = ""
     with open(file_path, "r") as file:
         source = file.read()
@@ -23,13 +22,15 @@ def main(file_path) -> None:
                     __file__,
                     os.path.relpath(__file__),
                     line,
+                    app
                 )
-                print(repr(module))
+                #print(module)
             case ast.Import:
 
                 break
             case _:
                 print(node)
+    print(app)
 
 
 if __name__ == "__main__":
