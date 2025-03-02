@@ -28,11 +28,12 @@ class ProgramNode:
         self.children.append(node)
         
     def __str__(self):
-        tabs = " " * (self.level - 1) * 3
+        space = " "
+        tabs = space * (self.level - 1) * 3
         string = tabs + f"{self.type}: {self.name} {{\n"
         for child in self.children:
             string += str(child) + "\n"
-        string += tabs + " " * 3 + "}"
+        string += tabs + space * 3 + "}"
         return string 
 
     def __repr__(self):
